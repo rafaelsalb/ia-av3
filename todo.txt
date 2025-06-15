@@ -1,6 +1,6 @@
 Etapa 1
 
-[ ] histograma do monte carlo para cada método
+[x] histograma do monte carlo para cada método
 [ ] encontrar sigma ótimo para LRS
 [ ] encontrar sigma ótimo para GRS
 [ ] encontrar sigma ótimo para HillClimb

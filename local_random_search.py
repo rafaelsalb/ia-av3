@@ -15,6 +15,7 @@ class LocalRandomSearch:
         else:
             self.best_x = self.X[np.random.randint(0, len(self.X))]
         self.best_value = self.f(self.best_x)
+        self.iters = 0
 
 
     def perturb(self, x):
@@ -36,6 +37,7 @@ class LocalRandomSearch:
     def optimize(self):
         rounds_without_improvement = 0
         for _ in range(self.max_iter):
+            self.iters += 1
             perturbed_x = self.perturb(self.best_x)
             perturbed_value = self.f(perturbed_x)
 
@@ -46,7 +48,7 @@ class LocalRandomSearch:
                 rounds_without_improvement = 0
             else:
                 rounds_without_improvement += 1
-            if rounds_without_improvement >= 10:  # Stop if no improvement for 10 rounds
+            if rounds_without_improvement >= 50:  # Stop if no improvement for 50 rounds
                 break
 
         return self.best_x, self.best_value, self.history

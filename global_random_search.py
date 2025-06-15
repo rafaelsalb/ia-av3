@@ -12,6 +12,7 @@ class GlobalRandomSearch:
         self.limits = limits if limits is not None else np.array([[np.min(X[:, 0]), np.max(X[:, 0])], [np.min(X[:, 1]), np.max(X[:, 1])]])
         self.f = f
         self.minimize = minimize
+        self.iters = 0
 
 
     def candidate(self):
@@ -33,9 +34,10 @@ class GlobalRandomSearch:
         self.best_x = self.X[0]
         self.best_value = self.f(self.best_x)
         self.history.append((self.best_x, self.best_value))
-        without_improvement = 0
+        rounds_without_improvement = 0
 
         for _ in range(self.max_iter):
+            self.iters += 1
             x_cand = self.candidate()
             perturbed_value = self.f(x_cand)
 
@@ -43,10 +45,10 @@ class GlobalRandomSearch:
                 self.best_x = x_cand
                 self.best_value = perturbed_value
                 self.history.append((self.best_x, self.best_value))
-                without_improvement = 0
+                rounds_without_improvement = 0
             else:
-                without_improvement += 1
-            if without_improvement >= 10:  # Stop if no improvement for 10 rounds
+                rounds_without_improvement += 1
+            if rounds_without_improvement >= 50:  # Stop if no improvement for 50 rounds
                 break
 
         return self.best_x, self.best_value, self.history

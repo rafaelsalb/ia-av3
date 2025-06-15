@@ -11,6 +11,7 @@ class HillClimb:
         self.minimize = minimize
         self.current = None
         self.current_score = None
+        self.iters = 0
 
     def _random_solution(self, dim):
         if self.limits is not None:
@@ -28,26 +29,27 @@ class HillClimb:
         return x_new
 
     def optimize(self, dim=2, verbose=False):
-        current = self._random_solution(dim)
-        current_score = self.f(current)
+        self.current = self._random_solution(dim)
+        self.current_score = self.f(self.current)
         history = []
         rounds_without_improvement = 0
 
         for i in range(self.max_iters):
-            candidate = self._perturb(current)
+            self.iters += 1
+            candidate = self._perturb(self.current)
             candidate_score = self.f(candidate)
 
-            is_better = candidate_score < current_score if self.minimize else candidate_score > current_score
+            is_better = candidate_score < self.current_score if self.minimize else candidate_score > self.current_score
             if is_better:
                 self.current, self.current_score = candidate, candidate_score
                 history.append((candidate, candidate_score))
                 rounds_without_improvement = 0
             else:
                 rounds_without_improvement += 1
-            if rounds_without_improvement >= 10:  # Stop if no improvement for 10 rounds
+            if rounds_without_improvement >= 50:  # Stop if no improvement for 50 rounds
                 break
 
             if verbose and (i % 100 == 0 or i == self.max_iters - 1):
-                print(f"Iter {i}: score = {current_score:.4f}, x = {current}")
+                print(f"Iter {i}: score = {self.current_score:.4f}, x = {self.current}")
 
         return self.current, self.current_score, history
