@@ -17,7 +17,7 @@ class CostObjective:
         x[0] ∈ [-2, 4]
         x[1] ∈ [-2, 5]
         """
-        return np.exp(-(x[0] ** 2 + x[1] ** 2)) + 2 * np.exp(-((x[0] - 1.7) ** 2) + (x[1] - 1.7) ** 2)
+        return np.exp(-(x[0] ** 2 + x[1] ** 2)) + (2 * np.exp(-((x[0] - 1.7) ** 2 + (x[1] - 1.7) ** 2)))
 
     @staticmethod
     def f_3(x: np.ndarray):
