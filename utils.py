@@ -18,3 +18,11 @@ def mode(x):
         return most_common[0][0]
     else:
         return None
+
+
+def save_figs(idx, solution_figs, hist_figs):
+    method_titles = ["lrs", "grs", "hc"]
+    for fig, title in zip(solution_figs, method_titles):
+        fig.savefig(f"images/solution_{idx}_{title}.png")
+    for fig, title in zip(hist_figs, method_titles):
+        fig.savefig(f"images/hist_{idx}_{title}.png")

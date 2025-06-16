@@ -29,6 +29,7 @@ class MonteCarlo:
 
         solution_figs = []
         hist_figs = []
+        modes = []
         for i, search_method in enumerate([LocalRandomSearch, GlobalRandomSearch, HillClimb]):
             xs = []
             ys = []
@@ -53,6 +54,6 @@ class MonteCarlo:
             hist_figs.append(fig)
 
             ys = np.array(ys)
-            most_common = mode(ys)
+            modes.append(mode(ys))
 
-        return best_x, best_value, ys, most_common, solution_figs, hist_figs
+        return best_x, best_value, ys, modes, solution_figs, hist_figs
